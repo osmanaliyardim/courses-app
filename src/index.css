@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table, th, td {
+  border:1px solid black;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.courseCard{
+  display: flex;
+  justify-content: space-between;
+  flex-flow: wrap row;
+}
+
+.coursesBar{
+  display: flex;
+  justify-content: space-around;
+}
