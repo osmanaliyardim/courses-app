@@ -1,4 +1,15 @@
-export default function Input({ labelText, placeholderText, onChange }) {
-	<label>{labelText}</label>;
-	return <input placeholder={placeholderText} onChange={onChange} />;
-}
+const Input = ({ name, value, labelText, placeholderText, onChange }) => {
+  return (
+    <>
+      <label>{labelText}</label>
+      <input
+        name={name}
+        value={value}
+        placeholder={placeholderText}
+        onChange={onChange}
+      />
+    </>
+  );
+};
+
+export default Input;

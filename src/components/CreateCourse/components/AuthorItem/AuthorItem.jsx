@@ -1,12 +1,12 @@
 import Button from '../../../../common/Button/Button';
 
-export default function AuthorItem({ course }) {
-	function AddAuthor() {}
+const AuthorItem = ({ author, onClick }) => {
+  return (
+    <>
+      <p>{author.name}</p>
+      <Button buttonText='Add author' onClick={onClick}></Button>
+    </>
+  );
+};
 
-	return (
-		<>
-			<h2> {course.authors} </h2>
-			<Button buttonText='Add Author' onClick={AddAuthor}></Button>
-		</>
-	);
-}
+export default AuthorItem;

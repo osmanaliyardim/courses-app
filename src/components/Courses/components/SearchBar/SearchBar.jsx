@@ -1,20 +1,16 @@
-import { useState } from 'react';
 import Input from '../../../../common/Input/Input';
 
-export default function SearchBar({ course, setCourse }) {
-	const searchInfo = 'Search Courses..';
-	const [input, setInput] = useState({});
+const SearchBar = ({ onClick, onChange, value }) => {
+  const searchInfo = 'Search Courses..';
 
-	const handleChange = (event) => {
-		event.preventDefault();
-		const name = event.target.name;
-		const value = event.target.value;
-		setInput((values) => ({ values, [name]: value }));
+  return (
+    <Input
+      placeholderText={searchInfo}
+      value={value}
+      onClick={onClick}
+      onChange={onChange}
+    ></Input>
+  );
+};
 
-		// ToDo: Add searching logic
-		const searchResult = [...course, input];
-		setCourse(searchResult);
-	};
-
-	return <Input placeholderText={searchInfo} onChange={handleChange}></Input>;
-}
+export default SearchBar;

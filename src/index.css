@@ -18,16 +18,6 @@ table, th, td {
 
 .header {
   display: flex;
-  justify-content: space-between;
-}
-
-.courseCard{
-  display: flex;
-  justify-content: space-between;
-  flex-flow: wrap row;
-}
-
-.coursesBar{
-  display: flex;
   justify-content: space-around;
+  align-items: center;
 }

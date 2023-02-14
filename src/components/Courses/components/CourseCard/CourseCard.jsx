@@ -1,26 +1,34 @@
 import BootstrapButton from 'react-bootstrap/Button';
-import formatCreationDate from '../../../../helpers/formatCreationDate';
+import getCoursesDuration from '../../../../helpers/getCoursesDuration';
 
-export default function CourseCard(props) {
-	const course = props.course;
-	const fixedDuration = formatCreationDate(course.duration);
+const CourseCard = ({ course, author }) => {
+  const fixedDuration = getCoursesDuration(course.duration);
 
-	return (
-		<div className='courseCard'>
-			<h2>{course.title}</h2>
-			<h4>{course.description}</h4>
-			<h3>
-				<b>Authors:</b> {course.authors}
-			</h3>
-			<h3>
-				<b>Duration:</b> {fixedDuration}
-			</h3>
-			<h3>
-				<b>Created:</b> {course.creationDate}
-			</h3>
-			<BootstrapButton variant='info' type='submit'>
-				Show course
-			</BootstrapButton>
-		</div>
-	);
-}
+  const courseAuthorNames = course?.authors?.map((course) => {
+    const authorNames = author
+      .filter((author) => course.includes(author.id))
+      .map((author) => author.name);
+    return authorNames.join(', ');
+  });
+
+  return (
+    <div>
+      <h2>{course.title}</h2>
+      <p>{course.description}</p>
+      <p>
+        <b>Authors:</b> {courseAuthorNames.toString(',')}
+      </p>
+      <p>
+        <b>Duration:</b> {fixedDuration}
+      </p>
+      <p>
+        <b>Created:</b> {course.creationDate}
+      </p>
+      <BootstrapButton variant='info' type='submit'>
+        Show course
+      </BootstrapButton>
+    </div>
+  );
+};
+
+export default CourseCard;
