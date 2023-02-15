@@ -1,4 +1,4 @@
-function formatCreationDate() {
+const formatCreationDate = () => {
   const current = new Date();
 
   const date = `${current.getDate()}/${
@@ -6,6 +6,6 @@ function formatCreationDate() {
   }/${current.getFullYear()}`;
 
   return date;
-}
+};
 
 export default formatCreationDate;

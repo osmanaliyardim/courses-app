@@ -3,15 +3,21 @@ const getCoursesDuration = (duration) => {
   const minutes = duration % 60;
   let durationResult = '00:00 hour';
 
-  if (duration === undefined) return durationResult;
+  const hoursTreshold = 10;
+  const minutesThreshold = 10;
+  const defaultThreshold = 1;
 
-  if (hours < 10) {
+  if (duration === undefined) {
+    return durationResult;
+  }
+
+  if (hours < hoursTreshold) {
     durationResult = '0' + hours + ':' + minutes + ' hours';
   }
-  if (minutes < 10) {
+  if (minutes < minutesThreshold) {
     durationResult = hours + ':0' + minutes + ' hours';
   }
-  if (hours === 1) {
+  if (hours === defaultThreshold) {
     durationResult = hours + ':' + minutes + ' hour';
   }
 

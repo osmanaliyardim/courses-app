@@ -8,7 +8,7 @@
   padding: 10px;
 }
 
-.coursesBar{
+.coursesBar {
   display: flex;
   justify-content: space-around;
 }

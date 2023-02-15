@@ -19,7 +19,8 @@ const App = () => {
       <CreateCourse
         course={course}
         author={author}
-        setCourse={setCourse}
+        setAuthor={setAuthor}
+        setCourses={setCourse}
         className='mt-3'
       />
     </>

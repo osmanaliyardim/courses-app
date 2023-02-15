@@ -5,26 +5,26 @@ import Input from '../../common/Input/Input';
 import styles from '../CreateCourse/CreateCourse.module.css';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 import formatCreationDate from '../../helpers/formatCreationDate';
+import createGuid from '../../helpers/createGuid';
 
-const CreateCourse = ({ course, setCourse, author }) => {
+const CreateCourse = ({ course, setCourses, author, setAuthor }) => {
   let [inputs, setInputs] = useState({});
   let [authorInput, setAuthorInput] = useState('');
   let [formAuthors, setFormAuthors] = useState([]);
-  let authorId = Math.random();
-  let courseId = Math.random();
 
-  function addAuthorToForm(authorName, event) {
+  let authorId = createGuid();
+  let courseId = createGuid();
+
+  const addAuthorToForm = (authorName, event) => {
     event.stopPropagation();
-    console.log(authorName);
-    console.log(formAuthors);
     if (formAuthors.includes(authorName)) return;
 
     setFormAuthors([...formAuthors, authorName]);
-  }
+  };
 
-  function deleteAuthor(authorName) {
+  const deleteAuthor = (authorName) => {
     setFormAuthors(formAuthors.filter((author) => author !== authorName));
-  }
+  };
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -47,30 +47,30 @@ const CreateCourse = ({ course, setCourse, author }) => {
         ...inputs,
       },
     ];
-    setCourse(newCourses);
+    setCourses(newCourses);
 
     setInputs({});
   };
 
   const createAuthor = () => {
-    let shouldReturn = false;
-    author.forEach((element) => {
-      if (element.name === authorInput) {
-        shouldReturn = true;
-        return;
-      }
-    });
-    if (shouldReturn) return;
+    const shouldReturn = (element) => {
+      return element.name === authorInput;
+    };
 
-    if (authorInput) author.push({ id: authorId, name: authorInput });
+    author.some(shouldReturn);
+
+    if (authorInput)
+      setAuthor(author.push({ id: authorId, name: authorInput }));
+
+    console.log(author);
 
     setAuthorInput('');
   };
 
-  function showCourses(event) {
+  const showCourses = () => {
     document.getElementById('courses').style.display = 'block';
     document.getElementById('createCoursePortal').style.display = 'none';
-  }
+  };
 
   return (
     <Form

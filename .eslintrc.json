@@ -26,6 +26,7 @@
                 "singleQuote": true,
                 "useTabs": false,
                 "endOfLine": "auto",
+                "curly": ["error", "all"],
                 "max-len": ["error", { "code": 80 }],
                 "importOrder": [
                   "^react(.*)$",

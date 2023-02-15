@@ -5,10 +5,10 @@ import Button from '../../common/Button/Button';
 import styles from '../Courses/Courses.module.css';
 
 const Courses = ({ courses, authors }) => {
-  const [query, searchQuery] = useState('');
+  const [query, setQuery] = useState('');
 
   const handleChange = (event) => {
-    searchQuery(event.target.value);
+    setQuery(event.target.value);
   };
 
   const showCreateCourse = () => {
@@ -26,7 +26,7 @@ const Courses = ({ courses, authors }) => {
       {courses?.length
         ? courses
             .filter((element) =>
-              element.title.toLocaleLowerCase().includes(query)
+              element.title?.includes(query.toLocaleLowerCase())
             )
             .map((course) => {
               return (
