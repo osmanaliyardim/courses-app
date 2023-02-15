@@ -26,7 +26,7 @@ const Courses = ({ courses, authors }) => {
       {courses?.length
         ? courses
             .filter((element) =>
-              element.title?.includes(query.toLocaleLowerCase())
+              element.title?.toLowerCase().includes(query.toLowerCase())
             )
             .map((course) => {
               return (
