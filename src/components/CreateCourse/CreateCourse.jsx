@@ -62,8 +62,6 @@ const CreateCourse = ({ course, setCourses, author, setAuthor }) => {
     if (authorInput)
       setAuthor(author.push({ id: authorId, name: authorInput }));
 
-    console.log(author);
-
     setAuthorInput('');
   };
 
@@ -133,6 +131,7 @@ const CreateCourse = ({ course, setCourses, author, setAuthor }) => {
                     <AuthorItem
                       author={author}
                       onClick={(event) => addAuthorToForm(author.name, event)}
+                      clickToDelete={() => deleteAuthor(author.name)}
                     />
                   </div>
                 );
