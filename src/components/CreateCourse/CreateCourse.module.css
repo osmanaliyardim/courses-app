@@ -1,0 +1,20 @@
+.addAuthorPortal {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.authors {
+  display: flex;
+  flex-direction: column;
+}
+
+.addAuthorPortalRight {
+  display: flex;
+  align-items: center;
+}
+
+.addAuthorPortalLeft {
+  display: flex;
+  align-items: center;
+}
