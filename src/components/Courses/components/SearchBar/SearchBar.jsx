@@ -1,15 +1,26 @@
+import React from 'react';
+import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
+import styles from './SearchBar.module.css';
 
-const SearchBar = ({ onClick, onChange, value }) => {
-  const searchInfo = 'Search Courses..';
-
+const SearchBar = ({
+  btnOnClick,
+  inputLabelText,
+  inputPlaceholderText,
+  inputValue,
+  onChange,
+}) => {
   return (
-    <Input
-      placeholderText={searchInfo}
-      value={value}
-      onClick={onClick}
-      onChange={onChange}
-    ></Input>
+    <div className={styles.searchBar}>
+      <Input
+        inputPlaceholderText={inputPlaceholderText}
+        inputLabelText={inputLabelText}
+        onChange={onChange}
+        labelText={inputLabelText}
+        inputValue={inputValue}
+      />
+      <Button buttonText={'Search'} onClick={btnOnClick} />
+    </div>
   );
 };
 

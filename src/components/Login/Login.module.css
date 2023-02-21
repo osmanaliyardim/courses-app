@@ -1,0 +1,11 @@
+.loginForm {
+  display: flex;
+  align-items: center; 
+  justify-content: space-around;
+  flex-direction: column;
+  height: 20rem;
+}
+
+.registerLink {
+  color: blue;
+}

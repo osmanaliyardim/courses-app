@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.headerBody {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 18rem;
+}

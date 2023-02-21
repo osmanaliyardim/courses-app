@@ -1,20 +1,67 @@
-.addAuthorPortal {
+.createCoursePortal {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  margin: 2rem;
+  padding: 1rem;
+  border-width: 2px;
+  border-radius: 0.25rem;
+}
+
+.createCourseForm {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.authors {
-  display: flex;
+.titleInput {
   flex-direction: column;
 }
 
-.addAuthorPortalRight {
-  display: flex;
-  align-items: center;
+.descriptionInput {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
-.addAuthorPortalLeft {
+.labels {
   display: flex;
-  align-items: center;
+  justify-content: space-evenly;
+}
+
+.createAuthorForm {
+  display: flex;
+}
+
+.createAuthorFormHeader {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 0.5rem;
+}
+
+.createAuthorFormBody {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.addAuthorForm {
+  width: 50%;
+}
+
+.durationInput {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 0.5rem;
+}
+
+.duration {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.deleteAuthorForm {
+  width: 50%;
 }

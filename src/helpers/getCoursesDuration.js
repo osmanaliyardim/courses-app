@@ -1,27 +1,24 @@
-const getCoursesDuration = (duration) => {
-  const hours = Math.floor(duration / 60);
-  const minutes = duration % 60;
-  let durationResult = '00:00 hour';
+function getCoursesDuration(duration) {
+  let hh = Math.floor(duration / 60);
+  let mm = duration - hh * 60;
+  let hours = 'hours';
 
-  const hoursTreshold = 10;
-  const minutesThreshold = 10;
-  const defaultThreshold = 1;
-
-  if (duration === undefined) {
-    return durationResult;
+  if (duration == undefined) {
+    return 'No duration given.';
   }
 
-  if (hours < hoursTreshold) {
-    durationResult = '0' + hours + ':' + minutes + ' hours';
+  if (mm < 10) {
+    mm = '0' + mm;
   }
-  if (minutes < minutesThreshold) {
-    durationResult = hours + ':0' + minutes + ' hours';
+  if (hh < 10) {
+    hh = '0' + hh;
   }
-  if (hours === defaultThreshold) {
-    durationResult = hours + ':' + minutes + ' hour';
+  if (hh == 1) {
+    hours = 'hour';
   }
 
-  return durationResult;
-};
+  let formattedDuration = hh + ':' + mm + ' ' + hours;
+  return formattedDuration;
+}
 
 export default getCoursesDuration;

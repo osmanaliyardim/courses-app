@@ -1,20 +1,40 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
-import BootstrapButton from 'react-bootstrap/Button';
-import Welcome from './components/Welcome/Welcome';
+import styles from '../Header/Header.module.css';
 
 const Header = () => {
-  const userName = 'Osman Ali YARDIM';
-  const isAuthorized = true;
+  let location = useLocation();
+  let username = localStorage.getItem('username');
 
-  return (
-    <div className='header'>
-      <Logo></Logo>
-      <Welcome name={userName}></Welcome>
-      <BootstrapButton variant='danger' type='submit'>
-        {isAuthorized ? 'Logout' : 'Login'}
-      </BootstrapButton>
-    </div>
-  );
+  if (location.pathname === '/register') {
+    return (
+      <header className={styles.header}>
+        <Logo />
+      </header>
+    );
+  } else if (location.pathname === '/login') {
+    return (
+      <header className={styles.header}>
+        <Logo />
+      </header>
+    );
+  } else
+    return (
+      <header className={styles.header}>
+        <Logo />
+        <div className={styles.headerBody}>
+          <h2>{username}</h2>
+          <Link to={'/login'}>
+            <Button
+              buttonText='Logout'
+              onClick={() => localStorage.removeItem('userToken')}
+            />
+          </Link>
+        </div>
+      </header>
+    );
 };
 
 export default Header;

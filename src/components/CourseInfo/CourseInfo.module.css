@@ -1,0 +1,43 @@
+.courseInfoForm {
+  margin: 4rem;
+  border: 2px solid blue;
+  border-radius: 1rem;
+}
+
+.backToCoursesLink {
+  margin: 0.5rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.formBody {
+  display: flex;
+  width: 100%;
+}
+
+.description {
+  padding: 1rem;
+}
+
+.coursesForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.properties {
+  display: inline;
+  font-weight: 700;
+}
+
+.authorsProperties {
+  font-weight: 700;
+}

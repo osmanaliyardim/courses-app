@@ -1,147 +1,175 @@
-import { useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import React, { useState, useEffect } from 'react';
 import Button from '../../common/Button/Button';
-import Input from '../../common/Input/Input';
-import styles from '../CreateCourse/CreateCourse.module.css';
-import AuthorItem from './components/AuthorItem/AuthorItem';
+import { mockAuthors, mockCourses } from '../../data/data';
 import formatCreationDate from '../../helpers/formatCreationDate';
+import getCoursesDuration from '../../helpers/getCoursesDuration';
+import AuthorItem from './components/AuthorItem/AuthorItem';
+import Input from '../../common/Input/Input';
+import { useNavigate } from 'react-router-dom';
+import styles from './CreateCourse.module.css';
 import createGuid from '../../helpers/createGuid';
 
-const CreateCourse = ({ course, setCourses, author, setAuthor }) => {
-  let [inputs, setInputs] = useState({});
-  let [authorInput, setAuthorInput] = useState('');
-  let [formAuthors, setFormAuthors] = useState([]);
-
+function CreateCourse() {
+  const [authorInput, setAuthorInput] = useState('');
+  const [duration, setDuration] = useState(0);
+  const [courseAuthors, setCourseAuthors] = useState([]);
   let authorId = createGuid();
-  let courseId = createGuid();
+  const navigate = useNavigate();
 
-  const addAuthorToForm = (authorName, event) => {
-    event.stopPropagation();
-    if (formAuthors.includes(authorName)) return;
+  const [course, setCourse] = useState({
+    id: '0',
+    title: '',
+    description: '',
+    creationDate: '',
+    duration: 0,
+    authors: [authorId],
+  });
 
-    setFormAuthors([...formAuthors, authorName]);
-  };
-
-  const deleteAuthor = (authorName) => {
-    setFormAuthors(formAuthors.filter((author) => author !== authorName));
-  };
+  useEffect(() => {
+    if (course.title != '') {
+      mockCourses.push(course);
+    }
+  }, [course]);
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleAuthorChange = (event) => {
     setAuthorInput(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newCourses = [
-      ...course,
-      {
-        id: courseId,
-        creationDate: formatCreationDate(),
-        authors: formAuthors,
-        ...inputs,
-      },
-    ];
-    setCourses(newCourses);
-
-    setInputs({});
-  };
-
   const createAuthor = () => {
-    const shouldReturn = (element) => {
-      return element.name === authorInput;
-    };
+    let shouldReturn = false;
+    mockAuthors.forEach((element) => {
+      if (element.name === authorInput) {
+        shouldReturn = true;
+        return;
+      }
+    });
+    if (shouldReturn) return;
 
-    author.some(shouldReturn);
-
-    if (authorInput)
-      setAuthor(author.push({ id: authorId, name: authorInput }));
+    if (authorInput) mockAuthors.push({ id: createGuid(), name: authorInput });
 
     setAuthorInput('');
   };
 
-  const showCourses = () => {
-    document.getElementById('courses').style.display = 'block';
-    document.getElementById('createCoursePortal').style.display = 'none';
-  };
+  function addAuthor(authorName) {
+    if (courseAuthors.includes(authorName)) return;
+
+    setCourseAuthors([...courseAuthors, authorName]);
+  }
+
+  function deleteAuthor(authorName) {
+    setCourseAuthors(courseAuthors.filter((item) => item !== authorName));
+  }
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    setCourse(
+      mockCourses.push({
+        id: createGuid(),
+        title: event.target.elements.title.value,
+        description: event.target.elements.description.value,
+        creationDate: formatCreationDate(),
+        duration: event.target.elements.duration.value,
+        authors: [authorId],
+      })
+    );
+
+    navigate('/courses');
+  }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      id='createCoursePortal'
-      style={{ display: 'none' }}
-    >
-      <Form.Group className='mb-3' controlId='formBasicTitle'>
-        <Form.Label>Title:</Form.Label>
-        <Form.Control
-          type='text'
-          name='title'
-          value={inputs.title || ''}
-          onChange={handleChange}
-        />
-        <Form.Text className='text-muted'>
-          Course title must be provided.
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className='mb-3' controlId='formBasicDescription'>
-        <Form.Label>Description:</Form.Label>
-        <Form.Control
-          type='text'
-          name='description'
-          value={inputs.description || ''}
-          onChange={handleChange}
-        />
-        <Form.Text className='text-info'>
-          Course description must be provided.
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className='mb-3' controlId='formBasicDuration'>
-        <Form.Label>Duration:</Form.Label>
-        <Form.Control
-          type='text'
-          name='duration'
-          value={inputs.duration || ''}
-          onChange={handleChange}
-        />
-        <Form.Text className='text-warning'>
-          Course duration must be provided.
-        </Form.Text>
-      </Form.Group>
-      <div className={styles.addAuthorPortal}>
-        <div className={styles.addAuthorPortalLeft}>
-          <Input
-            labelText='Author name'
-            placeholderText='Enter author name..'
-            name='author'
-            value={authorInput}
-            onChange={handleAuthorChange}
-          />
-          <Button buttonText='Create author' onClick={createAuthor} />
+    <form onSubmit={handleFormSubmit}>
+      <div className={styles.createCoursePortal}>
+        <div className={styles.createCourseForm}>
+          <div className={styles.titleInput}>
+            <Input
+              labelText={'Title'}
+              placeholderText={'Enter Title...'}
+              inputName={'title'}
+              inputType={'text'}
+              isRequired={true}
+            />
+          </div>
+          <Button buttonText={'Create course'} btnType={'submit'} />
         </div>
-        <div className={styles.authors}>
-          {author?.length
-            ? author.map((author) => {
-                return (
-                  <div key={author.id} className={styles.addAuthorPortalRight}>
-                    <AuthorItem
-                      author={author}
-                      onClick={(event) => addAuthorToForm(author.name, event)}
-                      clickToDelete={() => deleteAuthor(author.name)}
-                    />
-                  </div>
-                );
-              })
-            : null}
+        <Input
+          className={styles.descriptionInput}
+          labelText={'Description'}
+          placeholderText={'Enter Description..'}
+          inputName={'description'}
+          inputType={'textarea'}
+          isRequired={true}
+          minLength={'2'}
+        />
+        <div className={styles.labels}>
+          <h2>Add author</h2>
+          <h2>Authors</h2>
+        </div>
+        <div className={styles.createAuthorForm}>
+          <div className={styles.createAuthorFormHeader}>
+            <Input
+              labelText={'Author name'}
+              placeholderText={'Enter author name...'}
+              inputName={'authorName'}
+              inputType={'textarea'}
+              minLength={'2'}
+              inputValue={authorInput}
+              onChange={handleChange}
+            />
+            <div className={styles.createAuthorFormBody}>
+              <Button
+                btnType={'button'}
+                buttonText={'Create author'}
+                onClick={createAuthor}
+              />
+            </div>
+          </div>
+          <div className={styles.addAuthorForm}>
+            {mockAuthors.map((element, index) => (
+              <AuthorItem
+                key={index}
+                authorName={element.name}
+                btnText='Add author'
+                btnOnClick={() => addAuthor(element.name)}
+                btnType={'button'}
+              />
+            ))}
+          </div>
+        </div>
+        <div className={styles.labels}>
+          <h2>Duration</h2>
+          <h2>Course authors</h2>
+        </div>
+        <div className={styles.labels}>
+          <div className={styles.durationInput}>
+            <Input
+              labelText={'Duration'}
+              placeholderText={'Enter duration in minutes...'}
+              inputName={'duration'}
+              inputType={'number'}
+              inputValue={duration}
+              isRequired={true}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+            <h2 className={styles.duration}>
+              Duration: {getCoursesDuration(duration)}
+            </h2>
+          </div>
+          <div className={styles.deleteAuthorForm}>
+            {courseAuthors.map((element, index) => (
+              <AuthorItem
+                key={index}
+                authorName={element}
+                btnOnClick={() => deleteAuthor(element)}
+                btnText='Delete author'
+                btnType={'button'}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <Button buttonText='+ Add Course' onClick={showCourses}></Button>
-    </Form>
+    </form>
   );
-};
+}
 
 export default CreateCourse;

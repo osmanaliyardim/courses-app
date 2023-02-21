@@ -1,0 +1,15 @@
+.customComponent {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.customInput {
+  border-width: 2px;
+  border-color: rgb(59 130 246);
+  border-radius: 0.25rem;
+}
