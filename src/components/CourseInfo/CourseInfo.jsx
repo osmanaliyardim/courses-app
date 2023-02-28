@@ -24,11 +24,13 @@ const CourseInfo = () => {
     }
   });
 
+  const leftArrowUnicode = '\u1438';
+
   return (
     <div className={styles.courseInfoForm}>
       <div className={styles.backToCoursesLink}>
         <Link to={'/courses'}>
-          <Button buttonText={' \u1438 Back to courses'} />
+          <Button buttonText={' ' + leftArrowUnicode + ' Back to courses'} />
         </Link>
       </div>
       <h1 className={styles.title}>{title}</h1>
@@ -36,21 +38,21 @@ const CourseInfo = () => {
         <div className={styles.description}>{description}</div>
         <div className={styles.coursesForm}>
           <div>
-            <h1 className={styles.properties}>ID: </h1>
+            <p className={styles.properties}>ID: </p>
             {courseId}
           </div>
           <div>
-            <h1 className={styles.properties}>Duration: </h1>
+            <p className={styles.properties}>Duration: </p>
             {getCoursesDuration(duration)}
           </div>
           <div>
-            <h1 className={styles.properties}>Created: </h1>
+            <p className={styles.properties}>Created: </p>
             {creationDate}
           </div>
           <div>
-            <h1 className={styles.authorsProperties}>Authors: </h1>
+            <p className={styles.authorsProperties}>Authors: </p>
             {authors.map((element, index) => {
-              return <p key={index}>{getAuthorNames(element)}</p>;
+              <p key={index}>{getAuthorNames(element)}</p>;
             })}
           </div>
         </div>

@@ -11,9 +11,7 @@ const Input = ({
   isRequired,
   minLength,
 }) => {
-  let required = false;
-
-  if (isRequired) required = true;
+  if (isRequired) isRequired = true;
 
   return (
     <div className={styles.customComponent}>
@@ -31,7 +29,7 @@ const Input = ({
         placeholder={placeholderText}
         value={inputValue}
         onChange={onChange}
-        required={required}
+        required={isRequired}
         minLength={minLength}
       />
     </div>

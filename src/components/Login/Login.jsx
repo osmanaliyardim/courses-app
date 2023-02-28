@@ -9,11 +9,13 @@ import Input from '../../common/Input/Input';
 const Login = () => {
   const navigate = useNavigate();
 
+  const loginEndpoint = 'http://localhost:4000/login';
+
   const login = (event) => {
     event.preventDefault();
 
     axios
-      .post('http://localhost:4000/login', {
+      .post(loginEndpoint, {
         name: event.target.elements.name.value,
         email: event.target.elements.email.value,
         password: event.target.elements.password.value,
@@ -24,10 +26,7 @@ const Login = () => {
         navigate('/courses');
       })
       .catch((error) => {
-        console.log(error);
-        console.log(error.response);
-        console.log(error.message);
-        console.log(error.request);
+        console.error(error);
       });
   };
 
