@@ -8,6 +8,14 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
+import { configureStore } from '@reduxjs/toolkit';
+import courses from './store';
+
+export const store = configureStore({
+  reducer: {
+    courses,
+  },
+});
 
 const App = () => {
   return (
@@ -16,11 +24,12 @@ const App = () => {
         <Header />
         <Routes>
           <Route path='/' element={<Courses />} />
-          <Route path='/courses' element={<Courses />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/courses/add' element={<CreateCourse />} />
-          <Route path='/courses/:courseId' element={<CourseInfo />} />
+          <Route path='/courses' element={<Courses />}>
+            <Route path='/add' element={<CreateCourse />} />
+            <Route path='/:courseId' element={<CourseInfo />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

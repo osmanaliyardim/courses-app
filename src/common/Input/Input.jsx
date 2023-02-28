@@ -8,32 +8,32 @@ const Input = ({
   inputValue,
   inputName,
   onChange,
-  isRequired,
+  isRequired = true,
   minLength,
 }) => {
-  let required = false;
-
-  if (isRequired) required = true;
+  if (isRequired) isRequired = true;
 
   return (
-    <div className={styles.customComponent}>
-      {labelText && (
-        <label className={styles.label} htmlFor='input'>
-          {labelText}
-        </label>
-      )}
+    <div>
+      <div className={styles.customComponent}>
+        {labelText && (
+          <label className={styles.label} htmlFor='input'>
+            {labelText}
+          </label>
+        )}
 
-      <input
-        className={styles.customInput}
-        id='input'
-        type={inputType}
-        name={inputName}
-        placeholder={placeholderText}
-        value={inputValue}
-        onChange={onChange}
-        required={required}
-        minLength={minLength}
-      />
+        <input
+          className={styles.customInput}
+          id='input'
+          type={inputType}
+          name={inputName}
+          placeholder={placeholderText}
+          value={inputValue}
+          onChange={onChange}
+          required={isRequired}
+          minLength={minLength}
+        />
+      </div>
     </div>
   );
 };

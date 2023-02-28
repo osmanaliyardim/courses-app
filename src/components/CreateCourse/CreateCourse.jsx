@@ -1,84 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import Button from '../../common/Button/Button';
-import { mockAuthors, mockCourses } from '../../data/data';
+import React, { useState } from 'react';
 import formatCreationDate from '../../helpers/formatCreationDate';
 import getCoursesDuration from '../../helpers/getCoursesDuration';
 import AuthorItem from './components/AuthorItem/AuthorItem';
-import Input from '../../common/Input/Input';
 import { useNavigate } from 'react-router-dom';
 import styles from './CreateCourse.module.css';
 import createGuid from '../../helpers/createGuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCourse, createAuthor } from '../../store';
+
+import Button from '../../common/Button/Button';
+import Input from '../../common/Input/Input';
 
 function CreateCourse() {
   const [authorInput, setAuthorInput] = useState('');
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState();
   const [courseAuthors, setCourseAuthors] = useState([]);
-  let authorId = createGuid();
   const navigate = useNavigate();
-
-  const [course, setCourse] = useState({
-    id: '0',
-    title: '',
-    description: '',
-    creationDate: '',
-    duration: 0,
-    authors: [authorId],
-  });
-
-  useEffect(() => {
-    if (course.title != '') {
-      mockCourses.push(course);
-    }
-  }, [course]);
+  const authors = useSelector((state) => state.courses.authors);
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setAuthorInput(event.target.value);
   };
 
-  const createAuthor = () => {
-    let shouldReturn = false;
-    mockAuthors.forEach((element) => {
-      if (element.name === authorInput) {
-        shouldReturn = true;
-        return;
-      }
-    });
-    if (shouldReturn) return;
-
-    if (authorInput) mockAuthors.push({ id: createGuid(), name: authorInput });
-
-    setAuthorInput('');
-  };
-
-  function addAuthor(authorName) {
+  const addAuthor = (authorName) => {
     if (courseAuthors.includes(authorName)) return;
 
     setCourseAuthors([...courseAuthors, authorName]);
-  }
+  };
 
-  function deleteAuthor(authorName) {
+  const deleteAuthor = (authorName) => {
     setCourseAuthors(courseAuthors.filter((item) => item !== authorName));
-  }
+  };
 
-  function handleFormSubmit(event) {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    setCourse(
-      mockCourses.push({
+    dispatch(
+      addCourse({
         id: createGuid(),
         title: event.target.elements.title.value,
         description: event.target.elements.description.value,
         creationDate: formatCreationDate(),
         duration: event.target.elements.duration.value,
-        authors: [authorId],
+        authors: courseAuthors,
       })
     );
 
     navigate('/courses');
-  }
+  };
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={(event) => handleFormSubmit(event)}>
       <div className={styles.createCoursePortal}>
         <div className={styles.createCourseForm}>
           <div className={styles.titleInput}>
@@ -120,17 +93,29 @@ function CreateCourse() {
               <Button
                 btnType={'button'}
                 buttonText={'Create author'}
-                onClick={createAuthor}
+                onClick={() => {
+                  let shouldReturn = false;
+                  authors.forEach((element) => {
+                    if (element.name === authorInput) {
+                      shouldReturn = true;
+                      return;
+                    }
+                  });
+                  if (shouldReturn) return;
+                  dispatch(
+                    createAuthor({ name: authorInput, id: createGuid() })
+                  );
+                }}
               />
             </div>
           </div>
           <div className={styles.addAuthorForm}>
-            {mockAuthors.map((element, index) => (
+            {authors.map((element, index) => (
               <AuthorItem
                 key={index}
                 authorName={element.name}
                 btnText='Add author'
-                btnOnClick={() => addAuthor(element.name)}
+                btnOnClick={() => addAuthor(element.id)}
                 btnType={'button'}
               />
             ))}

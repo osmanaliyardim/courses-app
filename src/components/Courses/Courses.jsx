@@ -4,8 +4,10 @@ import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 import getCoursesDuration from '../../helpers/getCoursesDuration';
-import { mockCourses } from '../../data/data';
 import styles from '../Courses/Courses.module.css';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAuthor, addCourse } from '../../store';
 
 const Courses = () => {
   const [query, setQuery] = useState('');
@@ -15,6 +17,28 @@ const Courses = () => {
   };
 
   const navigate = useNavigate();
+
+  let courses = useSelector((state) => state.courses.courses);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/courses/all')
+      .then(function (response) {
+        dispatch(addCourse(response.data.result[0]));
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+    axios
+      .get('http://localhost:4000/authors/all')
+      .then(function (response) {
+        dispatch(addAuthor(response.data.result));
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+  }, []);
 
   useEffect(() => {
     if (!localStorage.getItem('userToken')) {
@@ -33,7 +57,7 @@ const Courses = () => {
           onClick={() => navigate('/courses/add')}
         />
       </div>
-      {mockCourses
+      {courses
         .filter((course) =>
           course.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
         )

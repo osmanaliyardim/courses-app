@@ -1,13 +1,26 @@
-import { mockAuthors } from '../data/data';
+//ToDo: will be fixed
+//import { useSelector } from 'react-redux';
 
-const getAuthorNames = (authors) => {
+//const getAuthorNames = (authorParams) => {
+//   const authors = useSelector((state) => state.courses.authors);
+//   const authorNames = [];
+
+//   authorParams.forEach((paramElement) => {
+//     authors.forEach((author) => {
+//       if (paramElement === author.id) {
+//         authorNames.push(author.name);
+//       }
+//     });
+//   });
+
+//   return authorNames;
+// };
+
+//Mock
+const getAuthorNames = (authorParams) => {
   const authorNames = [];
 
-  mockAuthors.map((element) => {
-    if (authors.includes(element.id)) {
-      authorNames.push(element.name);
-    }
-  });
+  authorNames.push('osmanaliyardim');
 
   return authorNames;
 };

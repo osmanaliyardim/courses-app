@@ -3,6 +3,8 @@ import Button from '../../../../common/Button/Button';
 import { Link } from 'react-router-dom';
 import getAuthorNames from '../../../../helpers/getAuthorNames';
 import styles from './CourseCard.module.css';
+import { useDispatch } from 'react-redux';
+import { deleteCourse } from '../../../../store';
 
 const CourseCard = ({
   id,
@@ -12,6 +14,8 @@ const CourseCard = ({
   duration,
   authors,
 }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.courseCard}>
       <div className={styles.courseCardHeader}>
@@ -28,6 +32,13 @@ const CourseCard = ({
           <Link to={`/courses/${id}`}>
             <Button buttonText={'Show Course'} />
           </Link>
+          <Button
+            buttonText={'Delete'}
+            onClick={() => {
+              dispatch(deleteCourse(id));
+            }}
+          />
+          <Button buttonText={'Edit'} />
         </div>
       </div>
     </div>

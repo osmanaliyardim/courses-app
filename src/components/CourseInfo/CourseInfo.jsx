@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './CourseInfo.module.css';
+import { useSelector } from 'react-redux';
 
 import Button from '../../common/Button/Button';
-import { mockCourses } from '../../data/data';
 import getCoursesDuration from '../../helpers/getCoursesDuration';
 import getAuthorNames from '../../helpers/getAuthorNames';
 
@@ -14,7 +14,10 @@ const CourseInfo = () => {
   let duration;
   let authors;
   let creationDate;
-  mockCourses.forEach((element) => {
+
+  const courses = useSelector((state) => state.courses.courses);
+
+  courses.forEach((element) => {
     if (courseId == element.id) {
       title = element.title;
       description = element.description;
@@ -24,11 +27,13 @@ const CourseInfo = () => {
     }
   });
 
+  const leftArrowUnicode = '\u1438';
+
   return (
     <div className={styles.courseInfoForm}>
       <div className={styles.backToCoursesLink}>
         <Link to={'/courses'}>
-          <Button buttonText={' \u1438 Back to courses'} />
+          <Button buttonText={' ' + leftArrowUnicode + ' Back to courses'} />
         </Link>
       </div>
       <h1 className={styles.title}>{title}</h1>
@@ -36,21 +41,21 @@ const CourseInfo = () => {
         <div className={styles.description}>{description}</div>
         <div className={styles.coursesForm}>
           <div>
-            <h1 className={styles.properties}>ID: </h1>
+            <p className={styles.properties}>ID: </p>
             {courseId}
           </div>
           <div>
-            <h1 className={styles.properties}>Duration: </h1>
+            <p className={styles.properties}>Duration: </p>
             {getCoursesDuration(duration)}
           </div>
           <div>
-            <h1 className={styles.properties}>Created: </h1>
+            <p className={styles.properties}>Created: </p>
             {creationDate}
           </div>
           <div>
-            <h1 className={styles.authorsProperties}>Authors: </h1>
+            <p className={styles.authorsProperties}>Authors: </p>
             {authors.map((element, index) => {
-              return <p key={index}>{getAuthorNames(element)}</p>;
+              <p key={index}>{getAuthorNames(element)}</p>;
             })}
           </div>
         </div>

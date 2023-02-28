@@ -7,21 +7,16 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 
 const Registration = () => {
-  const submitRegister = (event) => {
-    axios
-      .post('http://localhost:4000/register', {
-        name: event.target.elements.name.value,
-        email: event.target.elements.email.value,
-        password: event.target.elements.password.value,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+  const registerEndpoint = 'http://localhost:4000/register';
 
+  const submitRegister = async (event) => {
     event.preventDefault();
+    const res = await axios.post(registerEndpoint, {
+      name: event.target.elements.name.value,
+      email: event.target.elements.email.value,
+      password: event.target.elements.password.value,
+    });
+    const data = await res.data;
   };
 
   return (

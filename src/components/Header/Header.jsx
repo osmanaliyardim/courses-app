@@ -3,10 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
 import styles from '../Header/Header.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveUser } from '../../store';
 
 const Header = () => {
   let location = useLocation();
-  let username = localStorage.getItem('username');
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.courses.user.name);
 
   if (location.pathname === '/register') {
     return (
@@ -29,7 +32,10 @@ const Header = () => {
           <Link to={'/login'}>
             <Button
               buttonText='Logout'
-              onClick={() => localStorage.removeItem('userToken')}
+              onClick={() => {
+                localStorage.removeItem('userToken');
+                dispatch(saveUser([false, '', '', '']));
+              }}
             />
           </Link>
         </div>

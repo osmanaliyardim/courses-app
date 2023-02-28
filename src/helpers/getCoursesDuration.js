@@ -1,4 +1,4 @@
-function getCoursesDuration(duration) {
+const getCoursesDuration = (duration) => {
   let hh = Math.floor(duration / 60);
   let mm = duration - hh * 60;
   let hours = 'hours';
@@ -19,6 +19,6 @@ function getCoursesDuration(duration) {
 
   let formattedDuration = hh + ':' + mm + ' ' + hours;
   return formattedDuration;
-}
+};
 
 export default getCoursesDuration;
