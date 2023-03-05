@@ -26,7 +26,7 @@ function CreateCourse() {
   });
 
   useEffect(() => {
-    if (course.title != '') {
+    if (course.title !== '') {
       mockCourses.push(course);
     }
   }, [course]);
@@ -50,17 +50,17 @@ function CreateCourse() {
     setAuthorInput('');
   };
 
-  function addAuthor(authorName) {
+  const addAuthor = (authorName) => {
     if (courseAuthors.includes(authorName)) return;
 
     setCourseAuthors([...courseAuthors, authorName]);
-  }
+  };
 
-  function deleteAuthor(authorName) {
+  const deleteAuthor = (authorName) => {
     setCourseAuthors(courseAuthors.filter((item) => item !== authorName));
-  }
+  };
 
-  function handleFormSubmit(event) {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
 
     setCourse(
@@ -75,7 +75,7 @@ function CreateCourse() {
     );
 
     navigate('/courses');
-  }
+  };
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -83,23 +83,23 @@ function CreateCourse() {
         <div className={styles.createCourseForm}>
           <div className={styles.titleInput}>
             <Input
-              labelText={'Title'}
-              placeholderText={'Enter Title...'}
-              inputName={'title'}
-              inputType={'text'}
+              labelText='Title'
+              placeholderText='Enter Title...'
+              inputName='title'
+              inputType='text'
               isRequired={true}
             />
           </div>
-          <Button buttonText={'Create course'} btnType={'submit'} />
+          <Button buttonText='Create course' btnType='submit' />
         </div>
         <Input
           className={styles.descriptionInput}
-          labelText={'Description'}
-          placeholderText={'Enter Description..'}
-          inputName={'description'}
-          inputType={'textarea'}
+          labelText='Description'
+          placeholderText='Enter Description..'
+          inputName='description'
+          inputType='textarea'
           isRequired={true}
-          minLength={'2'}
+          minLength='2'
         />
         <div className={styles.labels}>
           <h2>Add author</h2>
@@ -108,18 +108,18 @@ function CreateCourse() {
         <div className={styles.createAuthorForm}>
           <div className={styles.createAuthorFormHeader}>
             <Input
-              labelText={'Author name'}
-              placeholderText={'Enter author name...'}
-              inputName={'authorName'}
-              inputType={'textarea'}
-              minLength={'2'}
+              labelText='Author name'
+              placeholderText='Enter author name...'
+              inputName='authorName'
+              inputType='textarea'
+              minLength='2'
               inputValue={authorInput}
               onChange={handleChange}
             />
             <div className={styles.createAuthorFormBody}>
               <Button
-                btnType={'button'}
-                buttonText={'Create author'}
+                btnType='button'
+                buttonText='Create author'
                 onClick={createAuthor}
               />
             </div>
@@ -131,7 +131,7 @@ function CreateCourse() {
                 authorName={element.name}
                 btnText='Add author'
                 btnOnClick={() => addAuthor(element.name)}
-                btnType={'button'}
+                btnType='button'
               />
             ))}
           </div>
@@ -143,10 +143,10 @@ function CreateCourse() {
         <div className={styles.labels}>
           <div className={styles.durationInput}>
             <Input
-              labelText={'Duration'}
-              placeholderText={'Enter duration in minutes...'}
-              inputName={'duration'}
-              inputType={'number'}
+              labelText='Duration'
+              placeholderText='Enter duration in minutes...'
+              inputName='duration'
+              inputType='number'
               inputValue={duration}
               isRequired={true}
               onChange={(e) => setDuration(e.target.value)}
@@ -162,7 +162,7 @@ function CreateCourse() {
                 authorName={element}
                 btnOnClick={() => deleteAuthor(element)}
                 btnText='Delete author'
-                btnType={'button'}
+                btnType='button'
               />
             ))}
           </div>

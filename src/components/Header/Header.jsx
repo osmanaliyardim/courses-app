@@ -14,7 +14,8 @@ const Header = () => {
         <Logo />
       </header>
     );
-  } else if (location.pathname === '/login') {
+  }
+  if (location.pathname === '/login') {
     return (
       <header className={styles.header}>
         <Logo />

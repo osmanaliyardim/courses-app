@@ -11,8 +11,6 @@ const Input = ({
   isRequired,
   minLength,
 }) => {
-  if (isRequired) isRequired = true;
-
   return (
     <div className={styles.customComponent}>
       {labelText && (

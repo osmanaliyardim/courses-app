@@ -15,7 +15,7 @@ const CourseInfo = () => {
   let authors;
   let creationDate;
   mockCourses.forEach((element) => {
-    if (courseId == element.id) {
+    if (courseId === element.id) {
       title = element.title;
       description = element.description;
       duration = element.duration;
@@ -30,7 +30,7 @@ const CourseInfo = () => {
     <div className={styles.courseInfoForm}>
       <div className={styles.backToCoursesLink}>
         <Link to={'/courses'}>
-          <Button buttonText={' ' + leftArrowUnicode + ' Back to courses'} />
+          <Button buttonText={` ${leftArrowUnicode} Back to courses`} />
         </Link>
       </div>
       <h1 className={styles.title}>{title}</h1>
@@ -51,9 +51,9 @@ const CourseInfo = () => {
           </div>
           <div>
             <p className={styles.authorsProperties}>Authors: </p>
-            {authors.map((element, index) => {
-              <p key={index}>{getAuthorNames(element)}</p>;
-            })}
+            {authors.map((element, index) => (
+              <p key={index}>{getAuthorNames(element)}</p>
+            ))}
           </div>
         </div>
       </div>

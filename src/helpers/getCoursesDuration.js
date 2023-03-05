@@ -3,7 +3,7 @@ const getCoursesDuration = (duration) => {
   let mm = duration - hh * 60;
   let hours = 'hours';
 
-  if (duration == undefined) {
+  if (duration === undefined) {
     return 'No duration given.';
   }
 
@@ -13,11 +13,12 @@ const getCoursesDuration = (duration) => {
   if (hh < 10) {
     hh = '0' + hh;
   }
-  if (hh == 1) {
+  if (hh === 1) {
     hours = 'hour';
   }
 
   let formattedDuration = hh + ':' + mm + ' ' + hours;
+
   return formattedDuration;
 };
 

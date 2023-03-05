@@ -11,44 +11,40 @@ const Login = () => {
 
   const loginEndpoint = 'http://localhost:4000/login';
 
-  const login = (event) => {
+  const login = async (event) => {
     event.preventDefault();
+    const res = await axios.post(loginEndpoint, {
+      name: event.target.elements.name.value,
+      email: event.target.elements.email.value,
+      password: event.target.elements.password.value,
+    });
 
-    axios
-      .post(loginEndpoint, {
-        name: event.target.elements.name.value,
-        email: event.target.elements.email.value,
-        password: event.target.elements.password.value,
-      })
-      .then((response) => {
-        localStorage['username'] = response.data.user.name;
-        localStorage['userToken'] = response.data.result;
-        navigate('/courses');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const data = await res.data;
+
+    localStorage['username'] = data.user.name;
+    localStorage['userToken'] = data.result;
+    navigate('/courses');
   };
 
   return (
     <form onSubmit={login}>
       <div className={styles.loginForm}>
         <Input
-          labelText={'Name'}
-          placeholderText={'Enter your name..'}
-          inputName={'name'}
+          labelText='Name'
+          placeholderText='Enter your name..'
+          inputName='name'
         />
         <Input
-          labelText={'Email'}
-          placeholderText={'Enter your email..'}
-          inputName={'email'}
+          labelText='Email'
+          placeholderText='Enter your email..'
+          inputName='email'
         />
         <Input
-          labelText={'Password'}
-          placeholderText={'Enter your password..'}
-          inputName={'password'}
+          labelText='Password'
+          placeholderText='Enter your password..'
+          inputName='password'
         />
-        <Button buttonText={'Login'} />
+        <Button buttonText='Login' />
         <div>
           Don't you have an account?{' '}
           <Link className={styles.registerLink} to={`/register`}>

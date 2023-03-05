@@ -29,7 +29,7 @@ const Courses = () => {
       <div className={styles.coursesFormHead}>
         <SearchBar onChange={handleChange} />
         <Button
-          buttonText={'Add new course'}
+          buttonText='Add new course'
           onClick={() => navigate('/courses/add')}
         />
       </div>
@@ -47,7 +47,7 @@ const Courses = () => {
               creationDate={element.creationDate}
               duration={getCoursesDuration(element.duration)}
               authors={element.authors}
-            ></CourseCard>
+            />
           );
         })}
     </div>
