@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react';
-import Courses from '../src/components/Courses/Courses';
+import React from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Header from './components/Header/Header';
-import { mockCourses, mockAuthors } from './data/data';
+import Courses from './components/Courses/Courses';
+import Registration from './components/Registration/Registration';
+import Login from './components/Login/Login';
+import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 
 const App = () => {
-  const [course, setCourse] = React.useState();
-  const [author, setAuthor] = React.useState();
-  useEffect(() => {
-    setCourse(mockCourses);
-    setAuthor(mockAuthors);
-  }, []);
-
   return (
     <>
-      <Header className='mb-3'></Header>
-      <Courses courses={course} authors={author} className='mb-3' />
-      <CreateCourse
-        course={course}
-        author={author}
-        setAuthor={setAuthor}
-        setCourses={setCourse}
-        className='mt-3'
-      />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Courses />} />
+          <Route path='/register' element={<Registration />} />
+          <Route path='/login' element={<Login />} />
+
+          <Route path='/courses' element={<Courses />}>
+            <Route path='/add' element={<CreateCourse />} />
+            <Route path='/:courseId' element={<CourseInfo />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };

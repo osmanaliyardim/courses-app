@@ -1,41 +1,55 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
+import getCoursesDuration from '../../helpers/getCoursesDuration';
+import { mockCourses } from '../../data/data';
 import styles from '../Courses/Courses.module.css';
 
-const Courses = ({ courses, authors }) => {
+const Courses = () => {
   const [query, setQuery] = useState('');
 
   const handleChange = (event) => {
     setQuery(event.target.value);
   };
 
-  const showCreateCourse = () => {
-    document.getElementById('courses').style.display = 'none';
-    document.getElementById('createCoursePortal').style.display = 'block';
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem('userToken')) {
+      navigate('/register');
+    } else {
+      navigate('/courses');
+    }
+  }, []);
 
   return (
-    <div id='courses'>
-      <div className={styles.coursesBar}>
-        <SearchBar onChange={handleChange}></SearchBar>
-        <Button buttonText='Add New Course' onClick={showCreateCourse}></Button>
+    <div className={styles.coursesForm}>
+      <div className={styles.coursesFormHead}>
+        <SearchBar onChange={handleChange} />
+        <Button
+          buttonText='Add new course'
+          onClick={() => navigate('/courses/add')}
+        />
       </div>
-
-      {courses?.length
-        ? courses
-            .filter((element) =>
-              element.title?.toLowerCase().includes(query.toLowerCase())
-            )
-            .map((course) => {
-              return (
-                <div key={course.id} className={styles.courseCard}>
-                  <CourseCard course={course} author={authors}></CourseCard>
-                </div>
-              );
-            })
-        : null}
+      {mockCourses
+        .filter((course) =>
+          course.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+        )
+        .map((element, index) => {
+          return (
+            <CourseCard
+              key={index}
+              id={element.id}
+              title={element.title}
+              description={element.description}
+              creationDate={element.creationDate}
+              duration={getCoursesDuration(element.duration)}
+              authors={element.authors}
+            />
+          );
+        })}
     </div>
   );
 };

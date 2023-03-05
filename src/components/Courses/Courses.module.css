@@ -1,11 +1,10 @@
-.courseCard {
+.coursesForm {
+  margin: 2rem;
+}
+
+.coursesFormHead {
   display: flex;
   justify-content: space-between;
-  flex-flow: wrap row;
-  background-color: lightgray;
-  border: 2px solid black;
-  margin: 25px;
-  padding: 10px;
 }
 
 .coursesBar {

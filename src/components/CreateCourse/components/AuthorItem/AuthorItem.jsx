@@ -1,12 +1,13 @@
+import React from 'react';
 import Button from '../../../../common/Button/Button';
+import styles from './AuthorItem.module.css';
 
-const AuthorItem = ({ author, onClick, clickToDelete }) => {
+const AuthorItem = ({ authorName, btnText, btnOnClick, btnType }) => {
   return (
-    <>
-      <p>{author.name}</p>
-      <Button buttonText='Add author' onClick={onClick}></Button>
-      <Button buttonText='X' clickToDelete={clickToDelete}></Button>
-    </>
+    <div className={styles.authorItem}>
+      <p>{authorName}</p>
+      <Button buttonText={btnText} onClick={btnOnClick} btnType={btnType} />
+    </div>
   );
 };
 

@@ -1,34 +1,35 @@
-import BootstrapButton from 'react-bootstrap/Button';
-import getCoursesDuration from '../../../../helpers/getCoursesDuration';
+import React from 'react';
+import Button from '../../../../common/Button/Button';
+import { Link } from 'react-router-dom';
+import getAuthorNames from '../../../../helpers/getAuthorNames';
+import styles from './CourseCard.module.css';
 
-const CourseCard = ({ course, author }) => {
-  const fixedDuration = getCoursesDuration(course.duration);
-
-  const courseAuthorNames = course?.length
-    ? course?.authors?.map((course) => {
-        const authorNames = author
-          .filter((author) => course.includes(author.id))
-          .map((author) => author.name);
-        return authorNames.join(', ');
-      })
-    : null;
-
+const CourseCard = ({
+  id,
+  title,
+  description,
+  creationDate,
+  duration,
+  authors,
+}) => {
   return (
-    <div>
-      <h2>{course.title}</h2>
-      <p>{course.description}</p>
-      <p>
-        <b>Authors:</b> {courseAuthorNames}
-      </p>
-      <p>
-        <b>Duration:</b> {fixedDuration}
-      </p>
-      <p>
-        <b>Created:</b> {course.creationDate}
-      </p>
-      <BootstrapButton variant='info' type='submit'>
-        Show course
-      </BootstrapButton>
+    <div className={styles.courseCard}>
+      <div className={styles.courseCardHeader}>
+        <h1 className={styles.title}>{title}</h1>
+        <div>{description}</div>
+      </div>
+      <div className={styles.courseCardBody}>
+        <div className={styles.authorNames}>
+          Authors: {getAuthorNames(authors).join(', ')}
+        </div>
+        <div>Duration: {duration}</div>
+        <div>Created: {creationDate}</div>
+        <div className={styles.showCourseLink}>
+          <Link to={`/courses/${id}`}>
+            <Button buttonText={'Show Course'} />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
