@@ -26,10 +26,9 @@ const App = () => {
           <Route path='/' element={<Courses />} />
           <Route path='/register' element={<Registration />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/courses' element={<Courses />}>
-            <Route path='/add' element={<CreateCourse />} />
-            <Route path='/:courseId' element={<CourseInfo />} />
-          </Route>
+          <Route path='/courses' element={<Courses />} />
+          <Route path='/add' element={<CreateCourse />} />
+          <Route path='/:courseId' element={<CourseInfo />} />
         </Routes>
       </BrowserRouter>
     </>

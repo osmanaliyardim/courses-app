@@ -11,8 +11,6 @@ const Input = ({
   isRequired = true,
   minLength,
 }) => {
-  if (isRequired) isRequired = true;
-
   return (
     <div>
       <div className={styles.customComponent}>

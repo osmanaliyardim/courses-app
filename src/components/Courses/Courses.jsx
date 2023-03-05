@@ -18,25 +18,25 @@ const Courses = () => {
 
   const navigate = useNavigate();
 
-  let courses = useSelector((state) => state.courses.courses);
+  const courses = useSelector((state) => state.courses.courses);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    let endpoints = [
+      'http://localhost:4000/courses/all',
+      'http://localhost:4000/authors/all',
+    ];
+
     axios
-      .get('http://localhost:4000/courses/all')
-      .then(function (response) {
-        dispatch(addCourse(response.data.result[0]));
-      })
-      .catch(function (error) {
-        console.log(error.response);
-      });
-    axios
-      .get('http://localhost:4000/authors/all')
-      .then(function (response) {
-        dispatch(addAuthor(response.data.result));
-      })
-      .catch(function (error) {
-        console.log(error.response);
+      .all(endpoints.map((endpoint) => axios.get(endpoint)))
+      .then(
+        axios.spread(({ data: courses }, { data: authors }) => {
+          dispatch(addCourse(courses.result[0]));
+          dispatch(addAuthor(authors.result));
+        })
+      )
+      .catch((error) => {
+        console.error(error.response);
       });
   }, []);
 

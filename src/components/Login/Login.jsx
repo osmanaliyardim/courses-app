@@ -23,7 +23,7 @@ const Login = () => {
         email: event.target.elements.email.value,
         password: event.target.elements.password.value,
       })
-      .then(function (response) {
+      .then((response) => {
         dispatch(
           saveUser([
             true,
@@ -36,13 +36,13 @@ const Login = () => {
         localStorage['userToken'] = response.data.result;
         navigate('/courses');
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error(error);
       });
   };
 
   return (
-    <form action='' onSubmit={login}>
+    <form onSubmit={login}>
       <div className={styles.loginForm}>
         <Input
           labelText={'Name'}
