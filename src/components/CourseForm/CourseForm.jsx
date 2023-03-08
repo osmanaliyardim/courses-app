@@ -1,32 +1,30 @@
 import React, { useState } from 'react';
-import formatCreationDate from '../../helpers/formatCreationDate';
 import getCoursesDuration from '../../helpers/getCoursesDuration';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 import { useNavigate } from 'react-router-dom';
-import styles from './CreateCourse.module.css';
-import createGuid from '../../helpers/createGuid';
+import styles from './CourseForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCourse, createAuthor } from '../../store';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 
-function CreateCourse() {
+const CourseForm = () => {
   const [authorInput, setAuthorInput] = useState('');
   const [duration, setDuration] = useState();
   const [courseAuthors, setCourseAuthors] = useState([]);
   const navigate = useNavigate();
-  const authors = useSelector((state) => state.courses.authors);
   const dispatch = useDispatch();
+  const authors = useSelector((state) => state.courses.authors);
 
   const handleChange = (event) => {
     setAuthorInput(event.target.value);
   };
 
-  const addAuthor = (authorName) => {
-    if (courseAuthors.includes(authorName)) return;
+  const addAuthor = (author) => {
+    if (courseAuthors.includes(author)) return;
 
-    setCourseAuthors([...courseAuthors, authorName]);
+    setCourseAuthors([...courseAuthors, author]);
   };
 
   const deleteAuthor = (authorName) => {
@@ -38,12 +36,12 @@ function CreateCourse() {
 
     dispatch(
       addCourse({
-        id: createGuid(),
         title: event.target.elements.title.value,
         description: event.target.elements.description.value,
-        creationDate: formatCreationDate(),
-        duration: event.target.elements.duration.value,
-        authors: courseAuthors,
+        duration: Number(event.target.elements.duration.value),
+        authors: courseAuthors.map((author) => {
+          return author.id;
+        }),
       })
     );
 
@@ -94,17 +92,7 @@ function CreateCourse() {
                 btnType={'button'}
                 buttonText={'Create author'}
                 onClick={() => {
-                  let shouldReturn = false;
-                  authors.forEach((element) => {
-                    if (element.name === authorInput) {
-                      shouldReturn = true;
-                      return;
-                    }
-                  });
-                  if (shouldReturn) return;
-                  dispatch(
-                    createAuthor({ name: authorInput, id: createGuid() })
-                  );
+                  dispatch(createAuthor(authorInput));
                 }}
               />
             </div>
@@ -115,7 +103,7 @@ function CreateCourse() {
                 key={index}
                 authorName={element.name}
                 btnText='Add author'
-                btnOnClick={() => addAuthor(element.id)}
+                btnOnClick={() => addAuthor(element)}
                 btnType={'button'}
               />
             ))}
@@ -141,20 +129,22 @@ function CreateCourse() {
             </h2>
           </div>
           <div className={styles.deleteAuthorForm}>
-            {courseAuthors.map((element, index) => (
-              <AuthorItem
-                key={index}
-                authorName={element}
-                btnOnClick={() => deleteAuthor(element)}
-                btnText='Delete author'
-                btnType={'button'}
-              />
-            ))}
+            {courseAuthors.map((element, index) => {
+              return (
+                <AuthorItem
+                  key={index}
+                  authorName={element.name}
+                  btnOnClick={() => deleteAuthor(element)}
+                  btnText='Delete author'
+                  btnType={'button'}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
     </form>
   );
-}
+};
 
-export default CreateCourse;
+export default CourseForm;
