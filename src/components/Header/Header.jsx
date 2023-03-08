@@ -4,7 +4,7 @@ import Button from '../../common/Button/Button';
 import Logo from './components/Logo/Logo';
 import styles from '../Header/Header.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveUser } from '../../store';
+import { logout } from '../../store';
 
 const Header = () => {
   let location = useLocation();
@@ -33,8 +33,8 @@ const Header = () => {
             <Button
               buttonText='Logout'
               onClick={() => {
+                dispatch(logout());
                 localStorage.removeItem('userToken');
-                dispatch(saveUser([false, '', '', '']));
               }}
             />
           </Link>
