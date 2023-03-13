@@ -20,15 +20,17 @@ const CourseCard = ({
   return (
     <div className={styles.courseCard}>
       <div className={styles.courseCardHeader}>
-        <h1 className={styles.title}>{title}</h1>
-        <div>{description}</div>
+        <h1 data-testid='title' className={styles.title}>
+          {title}
+        </h1>
+        <div data-testid='description'>{description}</div>
       </div>
       <div className={styles.courseCardBody}>
-        <div className={styles.authorNames}>
+        <div data-testid='authors' className={styles.authorNames}>
           Authors: {getAuthorNames(authors).join(', ')}
         </div>
-        <div>Duration: {duration}</div>
-        <div>Created: {creationDate}</div>
+        <div data-testid='duration'>Duration: {duration}</div>
+        <div data-testid='creationDate'>Created: {creationDate}</div>
         <div className={styles.showCourseLink}>
           <Link to={`/courses/${id}`}>
             <Button buttonText={'Show Course'} />
