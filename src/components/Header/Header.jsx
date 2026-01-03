@@ -28,7 +28,7 @@ const Header = () => {
       <header className={styles.header}>
         <Logo />
         <div className={styles.headerBody}>
-          <h2>{username}</h2>
+          <h2 data-testid='username'>{username}</h2>
           <Link to={'/login'}>
             <Button
               buttonText='Logout'
